@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Sun, Moon, Coffee, Zap, Sparkles, Phone, MessageCircle, Instagram, ChevronRight, CheckCircle } from "lucide-react"
+import { Sun, Moon, Coffee, Zap, Sparkles, Phone, ChevronRight, CheckCircle, Send } from "lucide-react"
 import Icon from "@/components/ui/icon"
 
 type Theme = "day" | "night" | "coffee" | "mint" | "electric"
@@ -148,21 +148,21 @@ const contactLinks = [
     icon: Phone,
     url: "tel:+79991234567",
     username: "+7 (999) 123-45-67",
-    desc: "Звонки с 9:00 до 21:00",
+    desc: "Пенза-Заречный · с 9:00 до 21:00",
   },
   {
-    name: "WhatsApp",
-    icon: MessageCircle,
-    url: "https://wa.me/79991234567",
-    username: "Написать в WhatsApp",
+    name: "ВКонтакте",
+    icon: Send,
+    url: "https://vk.com",
+    username: "Написать ВКонтакте",
     desc: "Быстрый ответ на вопросы",
   },
   {
-    name: "Instagram",
-    icon: Instagram,
-    url: "https://instagram.com",
-    username: "@master_plitka",
-    desc: "Фото работ и отзывы",
+    name: "Мессенджер Макс",
+    icon: Send,
+    url: "https://max.ru",
+    username: "Написать в Макс",
+    desc: "Фото, вопросы, замер",
   },
 ]
 
