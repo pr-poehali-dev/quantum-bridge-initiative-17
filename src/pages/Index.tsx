@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Github, Twitter, Instagram, Linkedin, Mail, Globe, Coffee, Sun, Moon, Zap, Sparkles } from "lucide-react"
+import { Sun, Moon, Coffee, Zap, Sparkles, Phone, MessageCircle, Instagram, ChevronRight, CheckCircle } from "lucide-react"
+import Icon from "@/components/ui/icon"
 
 type Theme = "day" | "night" | "coffee" | "mint" | "electric"
 
@@ -16,6 +17,7 @@ const themes: Record<Theme, {
   buttonBg: string
   buttonText: string
   buttonHover: string
+  tagBg: string
 }> = {
   day: {
     name: "День",
@@ -29,6 +31,7 @@ const themes: Record<Theme, {
     buttonBg: "bg-gray-900",
     buttonText: "text-white",
     buttonHover: "hover:bg-gray-700",
+    tagBg: "bg-gray-100",
   },
   night: {
     name: "Ночь",
@@ -42,6 +45,7 @@ const themes: Record<Theme, {
     buttonBg: "bg-gray-100",
     buttonText: "text-gray-900",
     buttonHover: "hover:bg-gray-300",
+    tagBg: "bg-gray-700",
   },
   coffee: {
     name: "Кофе",
@@ -55,6 +59,7 @@ const themes: Record<Theme, {
     buttonBg: "bg-amber-800",
     buttonText: "text-amber-50",
     buttonHover: "hover:bg-amber-700",
+    tagBg: "bg-amber-200",
   },
   mint: {
     name: "Мята",
@@ -68,6 +73,7 @@ const themes: Record<Theme, {
     buttonBg: "bg-emerald-800",
     buttonText: "text-emerald-50",
     buttonHover: "hover:bg-emerald-700",
+    tagBg: "bg-emerald-200",
   },
   electric: {
     name: "Электро",
@@ -81,26 +87,90 @@ const themes: Record<Theme, {
     buttonBg: "bg-cyan-500",
     buttonText: "text-slate-900",
     buttonHover: "hover:bg-cyan-400",
+    tagBg: "bg-slate-700",
   },
 }
 
-const socialLinks = [
-  { name: "GitHub", icon: Github, url: "https://github.com", username: "@yourhandle" },
-  { name: "Twitter", icon: Twitter, url: "https://twitter.com", username: "@yourhandle" },
-  { name: "Instagram", icon: Instagram, url: "https://instagram.com", username: "@yourhandle" },
-  { name: "LinkedIn", icon: Linkedin, url: "https://linkedin.com", username: "/in/yourprofile" },
-  { name: "Почта", icon: Mail, url: "mailto:hello@example.com", username: "hello@example.com" },
-  { name: "Сайт", icon: Globe, url: "https://example.com", username: "example.com" },
+const services = [
+  {
+    title: "Укладка плитки в ванной",
+    price: "от 1 500 ₽/м²",
+    features: ["Стены и пол", "Любой формат плитки", "Герметизация швов"],
+  },
+  {
+    title: "Укладка на кухне",
+    price: "от 1 200 ₽/м²",
+    features: ["Фартук, пол", "Мозаика и крупный формат", "Подготовка основания"],
+  },
+  {
+    title: "Укладка на улице / террасе",
+    price: "от 1 800 ₽/м²",
+    features: ["Морозостойкая плитка", "Дренажные уклоны", "Клинкер и керамогранит"],
+  },
+  {
+    title: "Демонтаж старой плитки",
+    price: "от 400 ₽/м²",
+    features: ["Снятие с минимальными повреждениями", "Вывоз строительного мусора"],
+  },
+  {
+    title: "Выравнивание стен / полов",
+    price: "от 600 ₽/м²",
+    features: ["Стяжка пола", "Штукатурка стен", "Гидроизоляция"],
+  },
+  {
+    title: "Мозаика и декор",
+    price: "от 2 500 ₽/м²",
+    features: ["Сложные узоры", "Художественная укладка", "Панно и акценты"],
+  },
+]
+
+const portfolio = [
+  {
+    image: "https://cdn.poehali.dev/projects/be735b2f-456c-4e57-8f8a-947b5f798411/files/f6ac004f-d21e-4561-aece-4b09f7fe5b89.jpg",
+    title: "Ванная в стиле минимализм",
+    tag: "Ванная",
+  },
+  {
+    image: "https://cdn.poehali.dev/projects/be735b2f-456c-4e57-8f8a-947b5f798411/files/92c5fd6b-9d2b-4cfc-a8d0-95496ab33549.jpg",
+    title: "Кухня с крупным форматом",
+    tag: "Кухня",
+  },
+  {
+    image: "https://cdn.poehali.dev/projects/be735b2f-456c-4e57-8f8a-947b5f798411/files/aca1a93e-9bd5-4c3b-870c-58243f9db3d2.jpg",
+    title: "Терраса с натуральным камнем",
+    tag: "Улица",
+  },
+]
+
+const contactLinks = [
+  {
+    name: "Позвонить",
+    icon: Phone,
+    url: "tel:+79991234567",
+    username: "+7 (999) 123-45-67",
+    desc: "Звонки с 9:00 до 21:00",
+  },
+  {
+    name: "WhatsApp",
+    icon: MessageCircle,
+    url: "https://wa.me/79991234567",
+    username: "Написать в WhatsApp",
+    desc: "Быстрый ответ на вопросы",
+  },
+  {
+    name: "Instagram",
+    icon: Instagram,
+    url: "https://instagram.com",
+    username: "@master_plitka",
+    desc: "Фото работ и отзывы",
+  },
 ]
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
 }
 
@@ -109,55 +179,30 @@ const itemVariants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 10,
-    },
+    transition: { type: "spring", stiffness: 100, damping: 10 },
   },
 }
 
 const linkVariants = {
-  hidden: { scale: 0.8, opacity: 0 },
+  hidden: { scale: 0.95, opacity: 0 },
   visible: {
     scale: 1,
     opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 200,
-      damping: 15,
-    },
+    transition: { type: "spring", stiffness: 200, damping: 15 },
   },
   hover: {
-    scale: 1.05,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 10,
-    },
+    scale: 1.03,
+    transition: { type: "spring", stiffness: 400, damping: 10 },
   },
-  tap: {
-    scale: 0.95,
-  },
+  tap: { scale: 0.97 },
 }
 
 const themeButtonVariants = {
-  hover: {
-    scale: 1.1,
-    rotate: 5,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 10,
-    },
-  },
-  tap: {
-    scale: 0.9,
-    rotate: -5,
-  },
+  hover: { scale: 1.1, rotate: 5, transition: { type: "spring", stiffness: 400, damping: 10 } },
+  tap: { scale: 0.9, rotate: -5 },
 }
 
-export default function SocialLinksLanding() {
+export default function TileMasterLanding() {
   const [currentTheme, setCurrentTheme] = useState<Theme>("day")
   const theme = themes[currentTheme]
 
@@ -168,7 +213,7 @@ export default function SocialLinksLanding() {
         className="fixed top-4 right-4 z-10"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5 }}
+        transition={{ delay: 0.4 }}
       >
         <div className={`flex gap-2 p-2 rounded-full ${theme.cardBg} ${theme.border} border-2`}>
           {Object.entries(themes).map(([key, themeData]) => {
@@ -180,7 +225,7 @@ export default function SocialLinksLanding() {
                 className={`p-2 rounded-full transition-all duration-200 ${
                   currentTheme === key
                     ? `${theme.buttonBg} ${theme.buttonText}`
-                    : `${theme.text} hover:${theme.buttonBg} hover:${theme.buttonText}`
+                    : `${theme.text}`
                 }`}
                 variants={themeButtonVariants}
                 whileHover="hover"
@@ -196,46 +241,41 @@ export default function SocialLinksLanding() {
 
       {/* Main Content */}
       <motion.div
-        className="container mx-auto px-4 py-16 max-w-md"
+        className="container mx-auto px-4 py-16 max-w-lg"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Profile Section */}
-        <motion.div className="text-center mb-12" variants={itemVariants}>
+        {/* Hero Section */}
+        <motion.div className="text-center mb-10" variants={itemVariants}>
           <motion.div
-            className={`w-24 h-24 mx-auto mb-6 rounded-full ${theme.cardBg} ${theme.border} border-4 flex items-center justify-center`}
-            whileHover={{
-              rotate: 360,
-              transition: { duration: 0.5 },
-            }}
+            className={`w-24 h-24 mx-auto mb-6 rounded-full ${theme.cardBg} ${theme.border} border-4 flex items-center justify-center text-4xl`}
+            whileHover={{ rotate: 360, transition: { duration: 0.6 } }}
           >
-            <motion.div
-              className={`w-16 h-16 rounded-full ${theme.buttonBg}`}
-              animate={{
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
+            🪵
           </motion.div>
 
           <motion.h1 className={`text-3xl font-bold mb-2 ${theme.text}`} variants={itemVariants}>
-            PixelLink
+            Мастер по плитке
           </motion.h1>
 
-          <motion.p className={`${theme.textSecondary} text-lg`} variants={itemVariants}>
-            Все мои ссылки в одном месте
+          <motion.p className={`text-xl font-semibold mb-3 ${theme.accent}`} variants={itemVariants}>
+            Алексей Петров
+          </motion.p>
+
+          <motion.p className={`${theme.textSecondary} text-base leading-relaxed`} variants={itemVariants}>
+            Профессиональная укладка плитки, керамогранита и мозаики.<br />
+            Более 10 лет опыта · Гарантия на работы · Москва и область
           </motion.p>
         </motion.div>
 
-        {/* Social Links */}
-        <motion.div className="space-y-4" variants={containerVariants}>
+        {/* Contacts — prominent but not pushy */}
+        <motion.div className="mb-10 space-y-3" variants={containerVariants}>
+          <motion.h2 className={`text-xs uppercase tracking-widest font-bold ${theme.textSecondary} mb-4`} variants={itemVariants}>
+            Связаться
+          </motion.h2>
           <AnimatePresence>
-            {socialLinks.map((link) => {
+            {contactLinks.map((link) => {
               const IconComponent = link.icon
               return (
                 <motion.a
@@ -243,37 +283,22 @@ export default function SocialLinksLanding() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`block w-full p-4 rounded-lg ${theme.cardBg} ${theme.border} border-2 transition-all duration-200 group`}
+                  className={`block w-full p-4 rounded-xl ${theme.cardBg} ${theme.border} border-2 transition-all duration-200`}
                   variants={linkVariants}
                   whileHover="hover"
                   whileTap="tap"
-                  layout
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <motion.div
-                        className={`p-2 rounded-full ${theme.buttonBg} ${theme.buttonText}`}
-                        whileHover={{ rotate: 15 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
+                      <div className={`p-2 rounded-full ${theme.buttonBg} ${theme.buttonText}`}>
                         <IconComponent size={20} />
-                      </motion.div>
+                      </div>
                       <div>
                         <h3 className={`font-semibold ${theme.text}`}>{link.name}</h3>
-                        <p className={`text-sm ${theme.textSecondary}`}>{link.username}</p>
+                        <p className={`text-sm ${theme.textSecondary}`}>{link.desc}</p>
                       </div>
                     </div>
-                    <motion.div
-                      className={`${theme.accent}`}
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <span className="text-xl">&rarr;</span>
-                    </motion.div>
+                    <ChevronRight size={18} className={theme.textSecondary} />
                   </div>
                 </motion.a>
               )
@@ -281,46 +306,70 @@ export default function SocialLinksLanding() {
           </AnimatePresence>
         </motion.div>
 
+        {/* Services & Prices */}
+        <motion.div className="mb-10" variants={itemVariants}>
+          <motion.h2 className={`text-xs uppercase tracking-widest font-bold ${theme.textSecondary} mb-4`} variants={itemVariants}>
+            Услуги и расценки
+          </motion.h2>
+          <div className="space-y-3">
+            {services.map((service, i) => (
+              <motion.div
+                key={i}
+                className={`p-4 rounded-xl ${theme.cardBg} ${theme.border} border-2`}
+                variants={linkVariants}
+                whileHover="hover"
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className={`font-semibold ${theme.text}`}>{service.title}</h3>
+                  <span className={`text-sm font-bold ml-3 shrink-0 ${theme.accent}`}>{service.price}</span>
+                </div>
+                <ul className="space-y-1">
+                  {service.features.map((f, j) => (
+                    <li key={j} className={`flex items-center gap-2 text-sm ${theme.textSecondary}`}>
+                      <CheckCircle size={13} className={theme.accent} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Portfolio */}
+        <motion.div className="mb-10" variants={itemVariants}>
+          <motion.h2 className={`text-xs uppercase tracking-widest font-bold ${theme.textSecondary} mb-4`} variants={itemVariants}>
+            Портфолио
+          </motion.h2>
+          <div className="grid grid-cols-1 gap-4">
+            {portfolio.map((item, i) => (
+              <motion.div
+                key={i}
+                className={`rounded-xl overflow-hidden ${theme.border} border-2`}
+                variants={linkVariants}
+                whileHover={{ scale: 1.02, transition: { type: "spring", stiffness: 300 } }}
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-52 object-cover"
+                />
+                <div className={`p-3 ${theme.cardBg} flex items-center justify-between`}>
+                  <span className={`font-medium text-sm ${theme.text}`}>{item.title}</span>
+                  <span className={`text-xs px-2 py-1 rounded-full ${theme.tagBg} ${theme.textSecondary}`}>{item.tag}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Footer */}
-        <motion.div className="text-center mt-12" variants={itemVariants}>
-          <motion.p
-            className={`text-sm ${theme.textSecondary}`}
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            Сделано с заботой в PixelLink
-          </motion.p>
+        <motion.div className="text-center" variants={itemVariants}>
+          <p className={`text-xs ${theme.textSecondary}`}>
+            Выезд на замер — бесплатно · Работаю по договору
+          </p>
         </motion.div>
       </motion.div>
-
-      {/* Animated Background Elements */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className={`absolute w-2 h-2 ${theme.buttonBg} rounded-full opacity-20`}
-            animate={{
-              x: [0, 100, 0],
-              y: [0, -100, 0],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 8 + i * 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.5,
-            }}
-            style={{
-              left: `${10 + i * 15}%`,
-              top: `${20 + i * 10}%`,
-            }}
-          />
-        ))}
-      </div>
     </div>
   )
 }
