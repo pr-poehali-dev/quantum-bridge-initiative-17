@@ -265,7 +265,7 @@ export default function TileMasterLanding() {
 
           <motion.p className={`${theme.textSecondary} text-base leading-relaxed`} variants={itemVariants}>
             Профессиональная укладка плитки, керамогранита и мозаики.<br />
-            Более 10 лет опыта · Гарантия на работы · Москва и область
+            Более 10 лет опыта · Гарантия на работы · Пенза-Заречный
           </motion.p>
         </motion.div>
 
