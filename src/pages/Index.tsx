@@ -260,7 +260,7 @@ export default function TileMasterLanding() {
           </motion.h1>
 
           <motion.p className={`text-xl font-semibold mb-3 ${theme.accent}`} variants={itemVariants}>
-            Алексей Петров
+            Дулатов Рафаэль
           </motion.p>
 
           <motion.p className={`${theme.textSecondary} text-base leading-relaxed`} variants={itemVariants}>
